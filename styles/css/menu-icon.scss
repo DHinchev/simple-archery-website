@@ -1,0 +1,43 @@
+.menu-icon{
+    width: 33px;
+    height: 30px;
+    margin: 18px 10px;
+    position: relative;
+    float: right;
+    cursor: pointer;
+  }
+  .menu-icon span{
+    background-color:#ffffff;
+    position: absolute;
+    border-radius: 2px;
+    transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+    width:100%;
+    height: 2px;
+    transition-duration: 500ms;
+  }
+  .menu-icon span:nth-child(1){
+    top:0px;
+    left: 0px;
+  }
+  .menu-icon span:nth-child(2){
+    top:13px;
+    left: 0px;
+  }
+  .menu-icon span:nth-child(3){
+    bottom:0px;
+    left: 0px;
+  }
+
+  .click-menu-icon span:nth-child(1){
+    transform: rotate(45deg);
+    top: 13px;
+  
+  }
+  .click-menu-icon span:nth-child(2){
+    transform: scale(.1);
+  
+  }
+  .click-menu-icon span:nth-child(3){
+    transform: rotate(-45deg);
+    top: 13px;
+  }

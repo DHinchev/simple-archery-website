@@ -1,0 +1,155 @@
+#slider-container {
+  position: relative;
+  overflow: hidden;
+  max-width: 1920px;
+  width: 100%;
+  height: 100vh;
+margin-left: auto;
+margin-right: auto }
+
+#slider {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  z-index: 1;
+}
+
+#slider img {
+  max-width: 1920px;
+  height: 100vh;
+}
+
+#prev.active,
+#next.active,
+#prev.active:hover,
+#next.active:hover {
+  pointer-events: none;
+}
+
+#prev {
+  position: absolute;
+  height: 120px;
+  width: 120px;
+  position: absolute;
+  margin: auto 10px;
+  top: 0;
+  right: 80%;
+  bottom: 0;
+  z-index: 1000;
+  padding-right: 30%;
+  opacity: 0;
+  transform: rotate(180deg); }
+
+#next {
+  position: absolute;
+  height: 120px;
+  width: 120px;
+  position: absolute;
+  margin: auto 10px;
+  top: 0;
+  right: 5%;
+  bottom: 0;
+  z-index: 1000;
+  padding-left: 30%;
+  opacity: 0; }
+
+#next:hover, #prev:hover {
+  opacity: 0.8; }
+
+#slider-navigation {
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  background-color: #1e222b;
+  opacity: 0.41;
+  z-index: 5;
+}
+
+#slider-navigation:hover {
+  opacity: 1;
+}
+
+#slider-navigation-container {
+  display: flex;
+  justify-content: center;
+}
+
+.sliderNavigationImage {
+  width: 150px;
+  height: 70px;
+  margin: 10px;
+  display: flex;
+  border: 1px solid #000000;
+}
+
+.slider-navigation,
+.sliderNavigationImage {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+
+.round-bullet-navigation {
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+@media only screen and (max-width: 460px) {
+  #top {
+    width: 50px;
+    margin-left: 75%;
+    margin-top: 155%;
+  }
+}
+
+@media only screen and (max-width: 740px) {
+  #slider img {
+    max-width: 750px;
+    width: 750px;
+    height: 50vh;
+  }
+  
+  #slider-container {
+    background-color: #004f70;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  #prev,
+  #next,
+  #prev.active,
+  #next.active {
+    display: none;
+  }
+
+  #slider-navigation-container,
+  #slider-navigation {
+    display: none;
+  }
+
+  #bullets-navigation {
+    position: relative;
+    width: 50%;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #slider-bullets {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .active-bullet {
+    background-color: #888888;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
+  }
+}
