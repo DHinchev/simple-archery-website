@@ -7,32 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <title>Image Sliders</title>
-    <link rel="stylesheet" type="text/css" href="styles/css/jquery-simple-slider.css">
-    <link rel="stylesheet" type="text/css" href="styles/css/index.css">
-    <link rel="stylesheet" type="text/css" href="styles/css/menu-icon.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/jquery-simple-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/index.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/menu-icon.min.css">
 </head>
 
 <body>
-    <input id="toggle" type="checkbox" />
     <nav id="navigation">
-        <label for="toggle" id="menu-label"></label>
         <div class="menu-icon">
             <span></span>
             <span></span>
             <span></span>
         </div>
-        <a href="#details-container">
+        <a class="svg-icon" href="#details-container">
             <svg class="contact-icon" enable-background="new 0 0 511.999 511.999" viewBox="0 0 511.999 511.999" xmlns="http://www.w3.org/2000/svg">
                 <path d="m498.83 377.63l-63.649-63.649c-17.548-17.547-46.102-17.547-63.649 0l-28.931 28.931c-13.294 13.294-34.926 13.29-48.215 5e-3l-125.4-125.51c-13.325-13.325-13.327-34.892 0-48.219l28.931-28.931c17.471-17.47 17.715-45.935-0.017-63.665l-63.632-63.432c-17.548-17.547-46.101-17.547-63.602-0.046-13.096 12.982-17.32 17.17-23.192 22.991-63.28 63.279-63.28 166.24-3e-3 229.52l198.69 198.8c63.428 63.429 166.09 63.434 229.52 0l23.146-23.145c17.548-17.548 17.548-46.1 0-63.648zm-406.99-343.25c5.849-5.849 15.365-5.85 21.233 0.016l63.632 63.432c5.863 5.863 5.863 15.352 0 21.216l-10.609 10.608-84.81-84.81 10.554-10.462zm175.55 408.83l-198.69-198.8c-48.958-48.958-51.649-125.83-8.276-178.01l84.564 84.564c-22.22 25.189-21.294 63.572 2.787 87.653l125.4 125.5 4e-3 4e-3c24.055 24.056 62.436 25.042 87.656 2.792l84.566 84.566c-52.007 43.298-128.71 41.019-178-8.276zm210.23-23.148l-10.609 10.609-84.865-84.866 10.607-10.608c5.85-5.849 15.367-5.85 21.217 0l63.649 63.649c5.85 5.85 5.85 15.368 1e-3 21.216z" />
             </svg>
         </a>
-        <a href="#location-container">
-            <svg class="location-icon" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <a class="svg-icon" href="#location-heading">
+            <svg class="location-icon" id="location-icon" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                 <path d="m256 0c-99.252 0-180 80.748-180 180 0 33.534 9.289 66.26 26.869 94.652l142.88 230.26c2.737 4.411 7.559 7.091 12.745 7.091h0.119c5.231-0.041 10.063-2.804 12.75-7.292l139.24-232.49c16.61-27.792 25.389-59.681 25.389-92.22 0-99.252-80.748-180-180-180zm128.87 256.82l-126.59 211.37-129.9-209.34c-14.633-23.632-22.567-50.896-22.567-78.846 0-82.71 67.49-150.2 150.2-150.2s150.1 67.49 150.1 150.2c0 27.121-7.411 53.688-21.234 76.818z" />
                 <path d="m256 90c-49.626 0-90 40.374-90 90 0 49.309 39.717 90 90 90 50.903 0 90-41.233 90-90 0-49.626-40.374-90-90-90zm0 150.2c-33.257 0-60.2-27.033-60.2-60.2 0-33.084 27.116-60.2 60.2-60.2s60.1 27.116 60.1 60.2c0 32.683-26.316 60.2-60.1 60.2z" />
             </svg>
         </a>
-        <a href="#article-body">
+        <a class="logo-svg" href="#article-body">
             <svg class="logo-icon" width="50pt" height="45pt" version="1.0" viewBox="0 0 133.000000 104.000000" xmlns="http://www.w3.org/2000/svg">
                 <g transform="translate(0 104) scale(.1 -.1)">
                     <path d="m703 1006c-166-41-304-172-354-339-17-55-20-86-17-165 3-53 8-104 12-114 6-12 1-18-23-23-22-5-40 0-72 20l-42 27-96-32c-53-18-100-36-105-41-4-4 15-16 44-26 31-10 55-25 58-35 2-10 8-18 13-18 4 0 2-19-7-42-8-22-13-43-11-44 2-2 46 12 97 30l94 34 11 47c7 34 16 50 31 56 19 6 24 1 45-44 30-64 136-173 205-209 246-131 552-33 674 216 27 54 43 104 50 151 47 345-270 632-607 551zm220-71c126-33 217-106 273-220 107-216 24-465-190-571-197-97-448-22-550 166-29 54-28 65 14 75 21 5 27 1 38-24 24-55 91-119 160-153 59-30 76-33 152-33s93 3 152 33c82 40 149 111 178 190 32 85 26 206-14 285-36 71-99 130-174 165-81 38-202 38-283 0-76-35-129-85-170-160-32-60-34-69-35-168-1-104-1-104-28-113-15-5-30-6-34-2s-7 57-7 118c0 105 2 116 31 177 91 190 290 286 487 235zm14-155c102-45 154-124 161-241 4-70 2-84-22-133-101-206-370-220-499-26-23 33-22 36 15 49 27 10 33 9 42-6 31-59 121-113 186-113 111 0 209 100 210 213 1 209-264 291-385 119-25-37-30-54-32-110-1-59-4-67-24-74-40-15-49-3-49 60 0 214 203 348 397 262zm-35-142c87-61 73-193-25-241-53-27-111-15-157 31l-35 35 40 14c29 10 45 11 57 4 51-31 113 13 90 65-7 13-19 27-27 30-27 11-64-5-77-33-8-16-28-31-50-39l-38-13v37c0 110 132 175 222 110z" />
@@ -45,9 +43,9 @@
             <ul>
                 <li><a href="#article-body" id="cslider">Home</a></li>
                 <li><a href="#about-us" id="about-link">About</a></li>
-                <li><a href="#location-container" id="location-link">Directions</a></li>
+                <li><a href="#location-heading" id="location-link">Directions</a></li>
                 <li><a href="#details-container" id="contact-us-link">Contact us</a></li>
-                <li><a href="#slider-container" id="gallery-link">Gallery</a></li>
+                <li><a href="#media-heading" id="gallery-link">Gallery</a></li>
                 <li><a href="#parners" id="partners-link">Partners</a></li>
                 <li><a href="#social-share-container" id="share-link">Share</a></li>
             </ul>
@@ -63,7 +61,7 @@
             <div class="overlay-mask"></div>
         </div>
         <div id="about-us">
-            <h3 class="about-us-text">About BG Archery</h3>
+            <h3 id="about-us-text">About BG Archery</h3>
             <p class="about-us-subtext">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                 Lorem
                 Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
@@ -99,8 +97,9 @@
                 <p class="email-address">bg_archery@gmail.com</p>
             </div>
         </div>
+        <h4 id="location-heading">Directions</h4>
         <div id="location-container"></div>
-        <h4 class="media-heading">Media gallery</h4>
+        <h4 id="media-heading">Media gallery</h4>
         <div id="slider-container" data-slider-container="true">
             <div id="slider" data-slider-speed="5000" data-slider-duration="2000" data-slider-mobile-duration="500"
                 data-slider="true">
@@ -166,12 +165,16 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="scripts/jquery-simple-slider.js"></script>
-    <script type="text/javascript" src="scripts/index.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFbW8L7lwzmeg2ISdRYhEp3zB_a8fmVgo&callback=initMap"></script>
+    <footer class="footer-container">
+            <p class="copyrights">Copyright © 2018 by <strong>Daniel Hinchev</strong> This website is for presentation
+                    purposes, all the image rights are reserved to their owners.</p>
+            <p class="footer-contact-us"> <a href="#details-container"> Contact Us </a></p>
+    </footer>
+
+    <script type="text/javascript" data-main="scripts/common" src="scripts/require.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFbW8L7lwzmeg2ISdRYhEp3zB_a8fmVgo&callback=initMap"></script>
     <script>
-        Slider.initSlider();
+        require(['common','index']);
     </script>
 </body>
 
