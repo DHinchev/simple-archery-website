@@ -1,9 +1,5 @@
-$font-family-bold: 'Lucida Sans Bold',
-'Lucida Sans Regular',
-sans-serif;
-$font-family: 'Lucida Sans',
-'Lucida Sans Regular',
-sans-serif;
+$font-family-bold: Verdana Bold, Geneva, sans-serif;
+$font-family: Verdana, Geneva, sans-serif;
 $core-color-background: #ffffff;
 $core-color-foreground: #000000;
 $core-color-brand: #006070;
@@ -205,7 +201,7 @@ $core-padding: 10px;
     @include articles-subheading();
 }
 
-.about-us {
+#about-us {
     position: relative;
     background-color: $core-color-background;
     padding: ($core-padding * 4) 0px;
