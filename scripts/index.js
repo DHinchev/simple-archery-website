@@ -3,14 +3,13 @@ require(['jquery', 'slider']);
     var init = function () {
         const menuIcon = document.querySelector('.menu-icon');
         const menuSlider = document.querySelector('.slide-menu');
+        const linksToAnchors = document.querySelectorAll('a[href^="#"]');
 
-        function slideMenu() {
+        slideMenu = () => {
             menuSlider.classList.toggle('open');
         }
 
-        menuIcon.addEventListener('click', slideMenu);
-
-        function initMap() {
+        initMap = () => {
             var shootingRange = {
                 lat: 42.704731,
                 lng: 23.360065
@@ -26,12 +25,12 @@ require(['jquery', 'slider']);
             });
         }
 
-        const anchorLinkHandler = (e) => {
-            const distanceToTop = el => Math.floor(el.getBoundingClientRect().top);
+        anchorLinkHandler = (e) => {
             e.preventDefault();
             const element = e.target;
             const targetID = element.getAttribute('href');
             const targetAnchor = document.querySelector(targetID);
+            const distanceToTop = el => Math.floor(el.getBoundingClientRect().top);
             if (!targetAnchor) return;
             const originalTop = distanceToTop(targetAnchor);
 
@@ -41,26 +40,39 @@ require(['jquery', 'slider']);
                 behavior: 'smooth'
             });
 
-            const checkIfDone = setInterval(() => {
+            checkIfAnchorMoved = setInterval(() => {
                 const bottom = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 2;
                 if (distanceToTop(targetAnchor) === 0 || bottom) {
                     targetAnchor.tabIndex = '-1';
                     targetAnchor.focus();
                     window.history.pushState('', '', targetID);
-                    clearInterval(checkIfDone);
+                    clearInterval(checkIfAnchorMoved);
                 }
             }, 100);
         }
 
-        const linksToAnchors = document.querySelectorAll('a[href^="#"]');
-
-        linksToAnchors.forEach(each => (each.onclick = anchorLinkHandler));
-
-        var initArray = {
-            initMap: initMap
+        listenForAnchorClick = () => {
+            linksToAnchors.forEach(el => (el.onclick = anchorLinkHandler));
         }
+
+        listenForMenuIconClick = () => {
+            menuIcon.addEventListener('click', slideMenu);
+        }
+
+        initiate = () => {
+            initMap();
+            listenForMenuIconClick();
+            listenForAnchorClick();
+        }
+        
+        var initArray = {
+            initiate: initiate,
+            initMap: initMap,
+            listenForMenuIconClick: listenForMenuIconClick
+        };
+
         return initArray;
     }();
 
-    init.initMap();
+    init.initiate();
 }());
