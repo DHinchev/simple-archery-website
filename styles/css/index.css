@@ -44,7 +44,8 @@
 
 .slide-menu {
   width: auto;
-  height: 60px; }
+  height: 60px;
+  z-index: 5; }
 
 .menu {
   list-style: none; }
@@ -323,3 +324,5 @@
     width: 100%;
     text-align: center;
     margin-top: 20px; } }
+
+/*# sourceMappingURL=index.css.map */

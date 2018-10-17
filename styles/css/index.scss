@@ -117,6 +117,7 @@ $core-padding: 10px;
 .slide-menu {
     width: auto;
     height: ($core-grid-unit * 6);
+    z-index: 5;
 }
 
 .menu {

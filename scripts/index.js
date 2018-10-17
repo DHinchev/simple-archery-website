@@ -7,6 +7,7 @@ require(['jquery', 'slider']);
 
         openMenu = () => {
             menuSlider.classList.toggle('open');
+            console.log(menuSlider.classList.toggle('open'));
         }
 
         initMap = () => {

@@ -7,7 +7,7 @@ define(["jquery"], function ($) {
             var $next;
             var $images;
             var sliderChildren;
-            var imageTransitionTime;
+            var sliderTransitionSpeed;
             var animationDuration;
             var animationDurationMobile;
             var interval = null;
@@ -22,10 +22,18 @@ define(["jquery"], function ($) {
             var pixelOffset = 0;
             var currentSlide = 0;
             var sliderContainerWidth;
-            var sliderContainerWidthMobile;
             var sliderChildrenLength;
             var sliderWidth;
-
+            
+            var menuIcon = document.querySelector('.menu-icon');
+            const menuSlider = document.querySelector('.slide-menu');
+    
+            var animationProperties = {
+                duration: animationDuration,
+                start: disableArrows,
+                complete: enableArrows
+            };
+    
             function getElements() {
                 $slider = getSliderElement();
                 $images = getSliderElement().children();
@@ -35,19 +43,18 @@ define(["jquery"], function ($) {
                 sliderChildren = $slider.children();
                 sliderChildrenLength = sliderChildren.length;
             }
-
+    
             function getSliderOptions() {
-                imageTransitionTime = getSliderTransitionTime();
+                sliderTransitionSpeed = getSliderTransitionSpeed();
                 animationDuration = getSliderDurationTime();
                 animationDurationTime = getSliderMobileMobileTime();
             }
-
+    
             function getSliderDimensions() {
                 sliderContainerWidth = $sliderContainer.width();
                 sliderWidth = sliderContainerWidth * sliderChildrenLength;
-                sliderContainerWidthMobile = sliderContainerWidth;
             }
-
+    
             function getSliderElement() {
                 var $slider = $('[data-slider]');
                 if (!$slider.length) {
@@ -55,7 +62,7 @@ define(["jquery"], function ($) {
                 }
                 return $('.' + $slider.attr('class'));
             }
-
+    
             function getSliderContainerElement() {
                 var $sliderContainer = $('[data-slider-container]');
                 if (!$sliderContainer.length) {
@@ -63,17 +70,17 @@ define(["jquery"], function ($) {
                 }
                 return $('.' + $sliderContainer.attr('class'));
             }
-
-            function getSliderTransitionTime() {
+    
+            function getSliderTransitionSpeed() {
                 var $sliderSpeed = $('[data-slider-speed]');
                 if (!$sliderSpeed.length) {
-                    imageTransitionTime = 5000;
+                    sliderTransitionSpeed = 5000;
                 } else {
-                    imageTransitionTime = $sliderSpeed.attr('data-slider-speed');
+                    sliderTransitionSpeed = $sliderSpeed.attr('data-slider-speed');
                 }
-                return imageTransitionTime;
+                return sliderTransitionSpeed;
             }
-
+    
             function getSliderDurationTime() {
                 var $sliderDuration = $('[data-slider-duration]');
                 if (!$sliderDuration.length) {
@@ -83,7 +90,7 @@ define(["jquery"], function ($) {
                 }
                 return animationDuration;
             }
-
+    
             function getSliderMobileMobileTime() {
                 var $sliderMobileDuration = $('[data-slider-mobile-duration]');
                 if (!$sliderMobileDuration.length) {
@@ -93,7 +100,7 @@ define(["jquery"], function ($) {
                 }
                 return animationMobileDuration;
             }
-
+    
             function getSliderPrevArrowElement() {
                 var $sliderPrev = $('[data-slider-prev]');
                 if (!$sliderPrev.length) {
@@ -101,7 +108,7 @@ define(["jquery"], function ($) {
                 }
                 return $('.' + $sliderPrev.attr('class'));
             }
-
+    
             function getSliderNextArrowElement() {
                 var $sliderNext = $('[data-slider-next]');
                 if (!$sliderNext.length) {
@@ -109,178 +116,160 @@ define(["jquery"], function ($) {
                 }
                 return $('.' + $sliderNext.attr('class'));
             }
-
+    
+            function addClassOnMenuIcon() {
+                menuSlider.classList.toggle("open");
+            }
+    
             function autoSlide() {
                 currentLeftValue = $slider.offset().left;
-
-                if (currentLeftValue <= (sliderContainerWidth - sliderWidth)) {
-                    $slider.css('left', 0);
-                } else {
-                    nextLeftOffset = currentLeftValue - sliderContainerWidth;
-                    $slider.animate({
-                        'left': nextLeftOffset + 'px'
-                    }, {
-                        duration: animationDuration,
-                        start: function () {
-                            disableArrows();
-                        },
-                        complete: function () {
-                            enableArrows();
-                        }
-                    });
-                }
+                var hasLastSlideHasBeenReached = currentLeftValue <= (sliderContainerWidth - sliderWidth);
+                    if (hasLastSlideHasBeenReached) {
+                        $slider.css('left', 0);
+                    } else {
+                        nextLeftOffset = currentLeftValue - sliderContainerWidth;
+                        $slider.animate({
+                            'left': nextLeftOffset + 'px'
+                        }, animationProperties);
+                    }
             };
-
-            function sliderNavigation(navigationImages) {
-                var sliderNavigation = $('<div></div>');
-                var sliderNavigationContainer = $('<div></div>');
-                sliderNavigation.attr('class', 'slider-navigation');
-                $sliderContainer.append(sliderNavigation);
-                sliderNavigationContainer.attr('class', 'slider-navigation-container');
-                $(sliderNavigation).append(sliderNavigationContainer);
+    
+            function createSliderNavigation(navigationImages) {
+                var $sliderNavigation = $('<div class="slider-navigation"></div>');
+                var $sliderNavigationContainer = $('<div class="slider-navigation-container"></div>');
+    
+                $sliderNavigation.append($sliderNavigationContainer);
+                $sliderContainer.append($sliderNavigation);
                 navigationImages.each(function (index) {
-                    var temp = $(this).clone();
-                    temp.addClass('sliderNavigationImage');
-                    temp.removeClass('sliderImg');
-                    temp.attr("data-index", index);
-                    $(sliderNavigationContainer).append(temp);
+                    var $imgClone = $(this).clone();
+                    $imgClone.removeClass('slider-img').addClass('slider-navigation-image');
+                    $imgClone.attr('data-index', index);
+                    $sliderNavigationContainer.append($imgClone);
                 });
             }
-
-            function bulletsNavigationSliding(navigationImages) {
-                var sliderBulletsNavigation = $('<div></div>');
-                var sliderBulletsContainer = $('<div></div>');
-                sliderBulletsNavigation.attr('class', 'bullets-navigation');
-                $sliderContainer.append(sliderBulletsNavigation);
-                sliderBulletsContainer.attr('class', 'slider-bullets');
-                $(sliderBulletsNavigation).append(sliderBulletsContainer);
+    
+            function createSliderBulletsNavigation(navigationImages) {
+                var $sliderBulletsNavigation = $('<div class="bullets-navigation"></div>');
+                var $sliderBulletsContainer = $('<div class="slider-bullets"></div>');
+    
+                $sliderBulletsNavigation.append($sliderBulletsContainer);
+                $sliderContainer.append($sliderBulletsNavigation);
                 navigationImages.each(function (index) {
-                    var tempBullet = $('<div></div>');
-                    tempBullet.addClass('round-bullet-navigation');
-                    tempBullet.attr("data-bullet-index", index);
-                    $(sliderBulletsContainer).append(tempBullet);
+                    var $tempBullet = $('<div class="round-bullet-navigation"></div>');
+                    $tempBullet.attr('data-bullet-index', index);
+                    $sliderBulletsContainer.append($tempBullet);
                 });
             }
-
-            var disableArrows = function () {
-                $prev.addClass("active");
-                $next.addClass("active");
+    
+            function disableArrows() {
+                $prev.addClass('disable');
+                $next.addClass('disable');
             }
-
-            var enableArrows = function () {
-                $prev.removeClass("active");
-                $next.removeClass("active");
+    
+            function enableArrows() {
+                $prev.removeClass('disable');
+                $next.removeClass('disable');
             }
-
-            function moveOffsetLeft() {
-                currentLeftValue = $slider.offset().left;
+    
+            function slideToPrevious() {
                 clearInterval(interval);
-                if (currentLeftValue >= 0) {
-                    sliderPrev = -sliderWidth + sliderContainerWidth;
-                    $slider.css("left", sliderPrev + "px");
+                currentLeftValue = $slider.offset().left;
+                var canMoveToLeft = currentLeftValue >= 0;
+                if (canMoveToLeft) {
+                    sliderPrev = sliderContainerWidth - sliderWidth;
+                    $slider.css('left', sliderPrev + 'px');
                 } else {
                     sliderPrev = currentLeftValue + sliderContainerWidth;
                     $slider.animate({
-                        "left": +sliderPrev + "px"
-                    }, {
-                        duration: animationDuration,
-                        start: function () {
-                            disableArrows();
-                        },
-                        complete: function () {
-                            enableArrows()
-                        }
-                    });
-                    setInterval(interval, imageTransitionTime);
+                        'left': sliderPrev + 'px'
+                    }, animationProperties);
+                    setInterval(interval, sliderTransitionSpeed);
                 }
-                interval = setInterval(autoSlide, imageTransitionTime);
+                interval = setInterval(autoSlide, sliderTransitionSpeed);
             }
-
-            function moveOffsetRight() {
-                currentLeftValue = $slider.offset().left;
+    
+            function slideToNext() {
                 clearInterval(interval);
-                if (currentLeftValue == (-sliderWidth + sliderContainerWidth)) {
-                    $slider.css("left", "0px");
+                currentLeftValue = $slider.offset().left;
+                var canMoveToRight = currentLeftValue === (sliderContainerWidth - sliderWidth);
+                if (canMoveToRight) {
+                    $slider.css('left', '0px');
                 } else {
                     sliderNext = currentLeftValue - sliderContainerWidth;
                     $slider.animate({
-                        "left": +sliderNext + "px"
-                    }, {
-                        duration: animationDuration,
-                        start: function () {
-                            disableArrows();
-                        },
-                        complete: function () {
-                            enableArrows()
-                        }
-                    });
-                    setInterval(interval, imageTransitionTime);
+                        'left': sliderNext + 'px'
+                    }, animationProperties);
+                    setInterval(interval, sliderTransitionSpeed);
                 }
-                interval = setInterval(autoSlide, imageTransitionTime);
+                interval = setInterval(autoSlide, sliderTransitionSpeed);
             }
-
+    
             function navigationClick(e) {
-                if (e.target.className === 'sliderNavigationImage') {
+                if (e.target.className === 'slider-navigation-image') {
                     clearInterval(interval);
-                    var moveSliderTo = $(e.target).data('index');
-                    $slider.css("left", -(sliderContainerWidth * moveSliderTo) + "px");
-                    interval = setInterval(autoSlide, imageTransitionTime);
+                    var $moveSliderTo = $(e.target).data('index');
+                    $slider.css('left', -(sliderContainerWidth * $moveSliderTo) + 'px');
+                    interval = setInterval(autoSlide, sliderTransitionSpeed);
                 }
             }
-
-            function resetImageSize() {
+    
+            function restrictImageSizeToSliderContainer() {
                 $images.each(function () {
-                    $(this).width(sliderContainerWidthMobile);
+                    $(this).width(sliderContainerWidth);
                 });
             }
-
+    
             function initEvents() {
                 $prev.click(function (e) {
                     e.stopPropagation();
-                    moveOffsetLeft();
+                    slideToPrevious();
                 });
-
+    
                 $next.click(function (e) {
                     e.stopPropagation();
-                    moveOffsetRight();
+                    slideToNext();
                 });
-
+    
                 $sliderContainer.click(function (e) {
                     e.stopPropagation();
                     navigationClick(e);
                 });
+    
+                menuIcon.addEventListener('click', addClassOnMenuIcon);
             }
-
+    
             function autoSlideMobile() {
                 currentLeftValue = $slider.offset().left;
-                if (currentLeftValue <= (-sliderWidth + sliderContainerWidthMobile)) {
+                var checkIfReachedLastImage = currentLeftValue <= (sliderContainerWidth - sliderWidth);
+                if (checkIfReachedLastImage) {
                     currentSlide = 0;
-                    $slider.css("left", "0px");
+                    $slider.css('left', '0px');
                     checkBulletsPosition(currentSlide);
                 } else {
                     currentSlide += 1;
-                    nextLeftOffset = currentLeftValue - sliderContainerWidthMobile;
+                    nextLeftOffset = currentLeftValue - sliderContainerWidth;
                     $slider.animate({
-                        "left": +nextLeftOffset + "px"
+                        'left': nextLeftOffset + 'px'
                     }, animationDurationMobile);
                     checkBulletsPosition(currentSlide);
                 }
             };
-
+    
             function navigateMobileImages(e) {
                 if (e.target.className === 'round-bullet-navigation') {
                     clearInterval(intervalMobile);
-                    var moveSliderTo = $(e.target).data('bullet-index');
+                    var $moveSliderTo = $(e.target).data('bullet-index');
+    
                     $(e.target).siblings().removeClass('active-bullet');
                     $(e.target).addClass('active-bullet');
                     $slider.animate({
-                        "left": + -(sliderContainerWidthMobile * moveSliderTo) + "px"
+                        'left': -(sliderContainerWidth * $moveSliderTo) + 'px'
                     }, animationDurationMobile);
-                    interval = setInterval(autoSlideMobile, imageTransitionTime);
+                    interval = setInterval(autoSlideMobile, sliderTransitionSpeed);
                 }
                 currentSlide = $('.active-bullet').data('bullet-index');
             }
-
+    
             function mobileSlideStart(event) {
                 clearInterval(intervalMobile);
                 if (event.originalEvent.touches)
@@ -290,7 +279,7 @@ define(["jquery"], function ($) {
                     startClientX = event.clientX;
                 }
             }
-
+    
             function mobileSliding(event) {
                 clearInterval(interval);
                 event.preventDefault();
@@ -301,7 +290,7 @@ define(["jquery"], function ($) {
                     sliding = 2;
                     startPixelOffset = pixelOffset;
                 }
-
+    
                 if (sliding == 2) {
                     var touchPixelRatio = 1;
                     if ((currentSlide == 0 && event.clientX > startClientX) ||
@@ -310,15 +299,15 @@ define(["jquery"], function ($) {
                     pixelOffset = startPixelOffset + deltaSlide / touchPixelRatio;
                 }
             }
-
+    
             function checkBulletsPosition(position) {
-                var bulletTruePosition = $("[data-bullet-index='" + position + "']");
+                var $bulletTruePosition = $('[data-bullet-index=' + position + ']');
                 if (position != $('.active-bullet').data('bullet-index')) {
-                    bulletTruePosition.siblings().removeClass('active-bullet');
-                    bulletTruePosition.addClass('active-bullet');
+                    $bulletTruePosition.siblings().removeClass('active-bullet');
+                    $bulletTruePosition.addClass('active-bullet');
                 }
             }
-
+    
             function mobileSlideEnd() {
                 clearInterval(interval);
                 if (sliding == 2) {
@@ -327,13 +316,13 @@ define(["jquery"], function ($) {
                     currentSlide = Math.min(Math.max(currentSlide, 0), slideCount - 1);
                     pixelOffset = currentSlide * -$sliderContainer.width();
                     $slider.animate({
-                        "left": +pixelOffset + "px"
+                        'left': +pixelOffset + 'px'
                     }, animationDurationMobile);
                     checkBulletsPosition(currentSlide);
                 }
-                intervalMobile = setInterval(autoSlideMobile, imageTransitionTime);
+                intervalMobile = setInterval(autoSlideMobile, sliderTransitionSpeed);
             }
-
+    
             function initMobileEvents() {
                 $sliderContainer.on('mousedown touchstart', mobileSlideStart);
                 $sliderContainer.on('mouseup touchend', mobileSlideEnd);
@@ -342,37 +331,36 @@ define(["jquery"], function ($) {
                     navigateMobileImages(e)
                 });
             }
-
+    
             function init() {
                 getElements();
                 getSliderOptions();
                 getSliderDimensions();
-
-                $slider.width(sliderWidth);
-
+    
                 initEvents();
-
-                sliderNavigation(sliderChildren);
-                bulletsNavigationSliding(sliderChildren);
-                resetImageSize();
-
-                interval = setInterval(autoSlide, imageTransitionTime);
-
+                $slider.width(sliderWidth);
+    
+                createSliderNavigation(sliderChildren);
+                createSliderBulletsNavigation(sliderChildren);
+                restrictImageSizeToSliderContainer();
+    
+                interval = setInterval(autoSlide, sliderTransitionSpeed);
+    
                 if ($(document).width() < 750) {
                     disableArrows();
                     slideCount = $images.length;
                     initMobileEvents();
-                    intervalMobile = setInterval(autoSlideMobile, imageTransitionTime);
+                    intervalMobile = setInterval(autoSlideMobile, sliderTransitionSpeed);
                 }
             }
-
+    
             var SliderApi = {
                 init: init
-            }
-
+            };
+    
             return SliderApi;
         }();
-
+    
         Slider.init();
     }());
 });
