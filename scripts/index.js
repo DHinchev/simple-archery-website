@@ -5,7 +5,7 @@ require(['jquery', 'slider']);
         const menuSlider = document.querySelector('.slide-menu');
         const linksToAnchors = document.querySelectorAll('a[href^="#"]');
 
-        slideMenu = () => {
+        openMenu = () => {
             menuSlider.classList.toggle('open');
         }
 
@@ -14,18 +14,20 @@ require(['jquery', 'slider']);
                 lat: 42.704731,
                 lng: 23.360065
             };
+            
             var map = new google.maps.Map(
                 document.querySelector('.location-container'), {
                     zoom: 14,
                     center: shootingRange
                 });
+
             var marker = new google.maps.Marker({
                 position: shootingRange,
                 map: map
             });
         }
 
-        anchorLinkHandler = (e) => {
+        anchorLinkHandling = (e) => {
             e.preventDefault();
             const element = e.target;
             const targetID = element.getAttribute('href');
@@ -42,7 +44,8 @@ require(['jquery', 'slider']);
 
             checkIfAnchorMoved = setInterval(() => {
                 const bottom = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 2;
-                if (distanceToTop(targetAnchor) === 0 || bottom) {
+                const checkDistanceToTarget = distanceToTop(targetAnchor) === 0 || bottom;
+                if (checkDistanceToTarget) {
                     targetAnchor.tabIndex = '-1';
                     targetAnchor.focus();
                     window.history.pushState('', '', targetID);
@@ -52,11 +55,11 @@ require(['jquery', 'slider']);
         }
 
         listenForAnchorClick = () => {
-            linksToAnchors.forEach(el => (el.onclick = anchorLinkHandler));
+            linksToAnchors.forEach(el => (el.onclick = anchorLinkHandling));
         }
 
         listenForMenuIconClick = () => {
-            menuIcon.addEventListener('click', slideMenu);
+            menuIcon.addEventListener('click', openMenu);
         }
 
         initiate = () => {
