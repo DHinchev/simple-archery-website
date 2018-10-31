@@ -56,7 +56,9 @@ require(['jquery', 'slider']);
         }
 
         listenForAnchorClick = () => {
-            linksToAnchors.forEach(el => (el.onclick = anchorLinkHandling));
+            if(!(window.navigator.userAgent.indexOf("Edge") > -1)) {
+                linksToAnchors.forEach(el => (el.onclick = anchorLinkHandling));
+            }
         }
 
         listenForMenuIconClick = () => {

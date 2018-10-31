@@ -34,7 +34,8 @@
 
 .logo-icon {
   fill: #ffffff;
-  margin-left: 15px; }
+  margin-left: 15px;
+  pointer-events: none; }
 
 .menu-icon {
   display: none; }
@@ -59,6 +60,7 @@
     justify-content: space-evenly; }
 
 .menu a {
+  font-family: Verdana, Geneva, sans-serif;
   display: block;
   color: #ffffff;
   padding: 30px 0px 15px 30px;
@@ -155,7 +157,7 @@
   background-color: #ebe6d9;
   padding: 40px 0px;
   display: flex;
-  justify-content: space-evenly; }
+  justify-content: space-around; }
   #details-container h4 {
     font-size: 22px;
     font-family: Verdana, Geneva, sans-serif;
@@ -211,7 +213,7 @@
 
 .social-share {
   display: flex;
-  justify-content: space-evenly; }
+  justify-content: space-around; }
 
 #media-heading {
   font-size: 32px;
@@ -324,5 +326,3 @@
     width: 100%;
     text-align: center;
     margin-top: 20px; } }
-
-/*# sourceMappingURL=index.css.map */

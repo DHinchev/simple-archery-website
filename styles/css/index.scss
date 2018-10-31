@@ -104,6 +104,7 @@ $core-padding: 10px;
 .logo-icon {
     fill: $core-color-background;
     margin-left: 15px;
+    pointer-events: none;
 }
 
 .menu-icon {
@@ -136,6 +137,7 @@ $core-padding: 10px;
 }
 
 .menu a {
+    font-family: $font-family;
     display: block;
     color: $core-color-background;
     padding: ($core-padding * 3) 0px ($core-padding * 1.5) ($core-padding * 3);
@@ -225,7 +227,7 @@ $core-padding: 10px;
     background-color: #ebe6d9;
     padding: ($core-padding * 4) 0px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
 
     h4 {
         @include text-headline();
@@ -276,7 +278,7 @@ $core-padding: 10px;
 
 .social-share {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
 #media-heading {

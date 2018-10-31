@@ -78,7 +78,8 @@
 }
 
 .slider-navigation,
-.slider-navigation-image {
+.slider-navigation-image,
+.slider-img {
   user-select: none;
   -moz-user-select: none;
   -khtml-user-select: none;
